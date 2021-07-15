@@ -1,0 +1,26 @@
+.unit__rect-border {
+  stroke: red;
+  fill: #ff000003;
+}
+
+.unit__rect-title-background {
+  fill: red;
+}
+
+.unit__rect-title {
+  fill: white;
+}
+
+.unit__rect-digitising {
+  stroke: red;
+  fill: #ff000003;
+}
+
+.unit__rect-digitising-selected {
+  stroke: blue;
+  cursor: move;
+}
+
+.unit__rect-digitising-selected[data-moved='moved'] {
+  stroke: orange;
+}

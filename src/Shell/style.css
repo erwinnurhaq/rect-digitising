@@ -16,11 +16,15 @@
   fill: #ff000003;
 }
 
+.unit__rect-digitising[data-touched='true'] {
+  fill: #ff000085;
+}
+
 .unit__rect-digitising-selected {
   stroke: blue;
   cursor: move;
 }
 
-.unit__rect-digitising-selected[data-moved='moved'] {
+.unit__rect-digitising-selected[data-moved='true'] {
   stroke: orange;
 }

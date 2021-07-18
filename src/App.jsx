@@ -46,13 +46,11 @@ export default function App() {
   }
 
   function checkCollision(rectNode, otherRectNodesClass) {
-    const polygonA = getUnitPolygon(rectNode);
     const collidedElement = [];
 
     selectAll(otherRectNodesClass).attr('data-touched', function () {
       if (this === rectNode) return null;
-      const polygonB = getUnitPolygon(this);
-      if (isPolygonsIntersect(polygonA, polygonB)) {
+      if (isPolygonsIntersect(getUnitPolygon(rectNode), getUnitPolygon(this))) {
         collidedElement.push(this);
         return true;
       }
@@ -200,6 +198,7 @@ export default function App() {
         .on('mousedown.start', null)
         .on('mousedown.drag', null)
         .on('mousedown.end', null);
+      selectAll('.unit__rect-border').attr('data-touched', null);
     }
   }, [isDigitising]); // eslint-disable-line
 

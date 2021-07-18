@@ -3,10 +3,6 @@
   fill: #ff000003;
 }
 
-.unit__rect-border[data-touched='true'] {
-  fill: #ff000085;
-}
-
 .unit__rect-title-background {
   fill: red;
 }

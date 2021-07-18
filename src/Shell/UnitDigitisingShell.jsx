@@ -32,6 +32,7 @@ export default function UnitDigitisingShell({
       />
       <circle
         className="unit-rect-digitising-arrow"
+        data-snapdirection="bottom"
         r={5}
         cx={x + width / 2}
         cy={y - height / 10}
@@ -40,6 +41,7 @@ export default function UnitDigitisingShell({
       />
       <circle
         className="unit-rect-digitising-arrow"
+        data-snapdirection="left"
         r={5}
         cx={x + width + height / 10}
         cy={y + height / 2}
@@ -48,6 +50,7 @@ export default function UnitDigitisingShell({
       />
       <circle
         className="unit-rect-digitising-arrow"
+        data-snapdirection="top"
         r={5}
         cx={x + width / 2}
         cy={y + height + height / 10}
@@ -56,6 +59,7 @@ export default function UnitDigitisingShell({
       />
       <circle
         className="unit-rect-digitising-arrow"
+        data-snapdirection="right"
         r={5}
         cx={x - height / 10}
         cy={y + height / 2}

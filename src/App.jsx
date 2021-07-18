@@ -29,14 +29,27 @@ export default function App() {
     return { x: baseX + transformedX, y: baseY + transformedY };
   }
 
-  function getRotationValue(nodeRect) {
-    const rotate = nodeRect.getAttribute('transform');
+  function getRotationValue(node) {
+    const rotate = node.getAttribute('transform');
     return parseFloat(rotate.split(' ')[0].split('(')[1]);
   }
 
-  function getUnitPolygon(nodeRect) {
-    const { x, y, width, height } = nodeRect.getBBox();
-    const rotate = getRotationValue(nodeRect);
+  function getUnitPolygon(node) {
+    if (node.tagName === 'circle') {
+      const x = parseFloat(node.getAttribute('cx'));
+      const y = parseFloat(node.getAttribute('cy'));
+      const transform = node
+        .getAttribute('transform')
+        .replace(/[\(\)]/g, ' ')
+        .split(' ');
+      const rotate = parseFloat(transform[1]);
+      const baseX = parseFloat(transform[2]);
+      const baseY = parseFloat(transform[3]);
+      return [transformXY(x, y, rotate, baseX, baseY)];
+    }
+
+    const { x, y, width, height } = node.getBBox();
+    const rotate = getRotationValue(node);
     const topLeft = { x, y };
     const topRight = transformXY(x + width, y, rotate, x, y);
     const bottomLeft = transformXY(x, y + height, rotate, x, y);
@@ -45,12 +58,12 @@ export default function App() {
     return [topLeft, topRight, bottomRight, bottomLeft];
   }
 
-  function checkCollision(rectNode, otherRectNodesClass) {
+  function checkCollision(node, otherNodesClass) {
     const collidedElement = [];
 
-    selectAll(otherRectNodesClass).attr('data-touched', function () {
-      if (this === rectNode) return null;
-      if (isPolygonsIntersect(getUnitPolygon(rectNode), getUnitPolygon(this))) {
+    selectAll(otherNodesClass).attr('data-touched', function () {
+      if (this === node) return null;
+      if (isPolygonsIntersect(getUnitPolygon(node), getUnitPolygon(this))) {
         collidedElement.push(this);
         return true;
       }
@@ -83,8 +96,17 @@ export default function App() {
     .on('end', function () {
       select(this).attr('data-moved', null);
       // TODO: select node for snapping
-      // const collided = checkCollision(this, '.unit__rect-digitising');
-      // console.log(collided);
+      const node = this;
+      let collidedNode = null;
+      let direction = '';
+      selectAll('.unit-rect-digitising-arrow').each(function () {
+        const collided = checkCollision(this, '.unit__rect-border');
+        if (collided.length > 0) {
+          collidedNode = collided[0];
+          direction = this.getAttribute('data-snapdirection');
+        }
+      });
+      snapToUnit(node, collidedNode, direction);
     });
 
   function setCoordinates(x, y, rotate) {
@@ -96,6 +118,34 @@ export default function App() {
         parseFloat((y / floorplan.height).toFixed(7)),
       ],
     }));
+  }
+
+  function getSnapMoveValue(rectNode, targetRectNode, direction) {
+    switch (direction) {
+      case 'top':
+        return parseFloat(rectNode.getAttribute('height'));
+      case 'right':
+        return parseFloat(targetRectNode.getAttribute('width'));
+      case 'bottom':
+        return parseFloat(targetRectNode.getAttribute('height'));
+      case 'left':
+        return parseFloat(rectNode.getAttribute('width'));
+      default:
+        return 0;
+    }
+  }
+
+  function snapToUnit(rectNode, targetRectNode, direction) {
+    if (!targetRectNode) return;
+    const moveValue = getSnapMoveValue(rectNode, targetRectNode, direction);
+    const rotate = getRotationValue(targetRectNode);
+    const { x, y } = getMovedCoordinates(moveValue, {
+      direction,
+      x: parseFloat(targetRectNode.getAttribute('x')),
+      y: parseFloat(targetRectNode.getAttribute('y')),
+      rotate,
+    });
+    setCoordinates(x, y, rotate);
   }
 
   function onEditClick(unit) {

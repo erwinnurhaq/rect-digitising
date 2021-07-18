@@ -10,13 +10,9 @@ const defaultFloorplan = {
 
 export default function FloorplanViewer(props) {
   const { floorplan = defaultFloorplan, children, ...prop } = props;
-  const {
-    identifier,
-    SVGREF,
-    zoomIn,
-    zoomOut,
-    resetView,
-  } = useFloorplanViewer({ floorplan, ...prop });
+  const { identifier, SVGREF, zoomIn, zoomOut, resetView } = useFloorplanViewer(
+    { floorplan, ...prop }
+  );
 
   return (
     <div
@@ -50,13 +46,25 @@ export default function FloorplanViewer(props) {
         id="button-zoom-container"
         className="floorplan-viewer__button-zoom-container"
       >
-        <div role="button" className="zoom-button" onClick={zoomIn}>
+        <div
+          role="button"
+          className={`zoom-button zoom-in${identifier}`}
+          onClick={zoomIn}
+        >
           <i className="zoom-in icon" />
         </div>
-        <div role="button" className="zoom-button" onClick={zoomOut}>
+        <div
+          role="button"
+          className={`zoom-button zoom-out${identifier}`}
+          onClick={zoomOut}
+        >
           <i className="zoom-out icon" />
         </div>
-        <div role="button" className="zoom-button" onClick={resetView}>
+        <div
+          role="button"
+          className={`zoom-button reset-view${identifier}`}
+          onClick={resetView}
+        >
           <i className="expand icon" />
         </div>
       </div>

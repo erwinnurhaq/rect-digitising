@@ -28,3 +28,7 @@
 .unit__rect-digitising-selected[data-moved='true'] {
   stroke: orange;
 }
+
+.unit-rect-digitising-arrow {
+  cursor: pointer;
+}

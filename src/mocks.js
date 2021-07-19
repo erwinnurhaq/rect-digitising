@@ -16,6 +16,19 @@ export const profile = {
 
 export const mockUnits = [
   {
+    id: 3,
+    floor_id: 63,
+    unit_floor_identifier: 2,
+    rotate: 45,
+    remark: 'Unit 3',
+    coordinates: [0.5, 0.5],
+    mac_address: '24:6F:28:3F:C7:D1',
+    ts_id: 28,
+    version: '1.0',
+    zone: 'Curie',
+    customProfile: { width: 2, length: 3, height: 3 },
+  },
+  {
     id: 4,
     floor_id: 63,
     unit_floor_identifier: 3,
@@ -26,6 +39,7 @@ export const mockUnits = [
     ts_id: 29,
     version: '1.0',
     zone: 'Curie',
+    customProfile: null,
   },
   {
     id: 5,
@@ -38,6 +52,7 @@ export const mockUnits = [
     ts_id: 64,
     version: '1.0',
     zone: 'Curie',
+    customProfile: null,
   },
 ];
 
@@ -52,4 +67,5 @@ export const defaultUnit = () => ({
   ts_id: Math.floor(Math.random() * 100),
   version: '',
   zone: '',
+  customProfile: null,
 });

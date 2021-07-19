@@ -21,6 +21,10 @@
   cursor: move;
 }
 
-.unit__rect-digitising-selected[data-moved='moved'] {
+.unit__rect-digitising-selected[data-moved='true'] {
   stroke: orange;
+}
+
+.unit-rect-digitising-arrow {
+  cursor: pointer;
 }

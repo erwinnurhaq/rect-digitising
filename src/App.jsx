@@ -95,7 +95,6 @@ export default function App() {
     })
     .on('end', function () {
       select(this).attr('data-moved', null);
-      // TODO: select node for snapping
       const node = this;
       let collidedNode = null;
       let direction = '';

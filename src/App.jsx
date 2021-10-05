@@ -46,6 +46,7 @@ export default function App() {
       const rotate = parseFloat(transform[1]);
       const baseX = parseFloat(transform[2]);
       const baseY = parseFloat(transform[3]);
+
       return [transformXY(x, y, rotate, baseX, baseY)];
     }
 
@@ -99,6 +100,7 @@ export default function App() {
       const node = this;
       let collidedNode = null;
       let direction = '';
+      
       selectAll('.unit-rect-digitising-arrow').each(function () {
         const collided = checkCollision(this, '.unit__rect-border');
         if (collided.length > 0) {
